@@ -9,7 +9,6 @@ import (
 
 var ErrInvalidToken = errors.New("invalid token")
 
-// GenerateToken creates a JWT with user claims and expiration.
 func GenerateToken(secret string, userID int64, username string, expiry time.Duration) (string, error) {
 	claims := jwt.MapClaims{
 		"user_id":  userID,
@@ -22,7 +21,6 @@ func GenerateToken(secret string, userID int64, username string, expiry time.Dur
 	return token.SignedString([]byte(secret))
 }
 
-// ParseToken validates the JWT and returns claims.
 func ParseToken(secret, tokenString string) (jwt.MapClaims, error) {
 	token, err := jwt.Parse(tokenString, func(t *jwt.Token) (interface{}, error) {
 		if t.Method.Alg() != jwt.SigningMethodHS256.Alg() {
